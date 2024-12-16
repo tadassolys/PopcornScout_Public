@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>IMDb Movie Search</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>IMDb Movie Search</h1>
+
+<form action="/imdb/results" method="get">
+    <label for="year">Year:</label>
+    <input type="number" id="year" name="year" th:value="${year}" required><br><br>
+
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre" th:value="${genre}" required><br><br>
+
+    <label for="minRating">Minimum Rating:</label>
+    <input type="number" step="0.1" id="minRating" name="minRating" th:value="${minRating}" required><br><br>
+
+    <label for="minVotes">Minimum Votes:</label>
+    <input type="number" id="minVotes" name="minVotes" th:value="${minVotes}" required><br><br>
+
+    <button type="submit">Search</button>
+</form>
+</body>
+</html>
