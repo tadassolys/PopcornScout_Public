@@ -1,6 +1,6 @@
 package com.example.auth.controller;
 
-import com.example.auth.model.User;
+import com.example.auth.entity.User;
 import com.example.auth.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

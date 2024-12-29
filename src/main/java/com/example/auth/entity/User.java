@@ -1,4 +1,4 @@
-package com.example.auth.model;
+package com.example.auth.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
