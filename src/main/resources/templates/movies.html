@@ -12,6 +12,78 @@
         th:hover { background-color: #ddd; }
         .sorted-asc::after { content: " ▲"; }
         .sorted-desc::after { content: " ▼"; }
+
+        .imdb-link {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .imdb-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Genre-specific styles */
+        .genre-container {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .genre-info {
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: help;
+        }
+
+        .genre-tooltip {
+            visibility: hidden;
+            position: absolute;
+            z-index: 1000;
+            left: -250px;
+            top: -200px;
+            width: 240px;
+            background-color: #333;
+            color: white;
+            text-align: left;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .genre-info:hover .genre-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .genre-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .genre-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        .genre-item span:last-child {
+            margin-left: 15px;
+            color: #8eccff;
+        }
+
+        .genre-container input {
+            width: calc(100% - 30px);
+        }
+
+        /* Modal styles */
         .modal {
             display: none;
             position: fixed;
@@ -79,6 +151,11 @@
         .movie-poster:hover {
             transform: scale(1.05);
         }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
     </style>
     <script>
         function sortTable(n) {
@@ -96,8 +173,7 @@
                     x = rows[i].getElementsByTagName("TD")[n];
                     y = rows[i + 1].getElementsByTagName("TD")[n];
 
-                    // Convert to number for numeric columns
-                    var numColumns = [2, 3, 4]; // Indices of numeric columns
+                    var numColumns = [2, 3, 4];
                     if (numColumns.includes(n)) {
                         var xVal = parseFloat(x.innerHTML) || 0;
                         var yVal = parseFloat(y.innerHTML) || 0;
@@ -114,7 +190,6 @@
                             }
                         }
                     } else {
-                        // String comparison for text columns
                         if (dir === "asc") {
                             if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
                                 shouldSwitch = true;
@@ -141,16 +216,15 @@
                 }
             }
 
-            // Remove existing sorting classes
             var headers = table.getElementsByTagName("TH");
             for (i = 0; i < headers.length; i++) {
                 headers[i].classList.remove("sorted-asc", "sorted-desc");
             }
 
-            // Add sorting indicator
             var header = table.getElementsByTagName("TH")[n];
             header.classList.add(dir === "asc" ? "sorted-desc" : "sorted-asc");
         }
+
         function openModal(movieId) {
             const movie = movieData[movieId];
             const modal = document.getElementById("movieModal");
@@ -172,7 +246,6 @@
             document.getElementById("movieModal").style.display = "none";
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById("movieModal");
             if (event.target === modal) {
@@ -180,7 +253,6 @@
             }
         }
 
-        // Store movie data for modal
         const movieData = /*[[${movies}]]*/ [];
     </script>
 </head>
@@ -195,9 +267,35 @@
         <label for="yearTo">Release Year To:</label>
         <input type="number" id="yearTo" name="yearTo" required>
     </div>
-    <div>
+    <div class="genre-container">
         <label for="genre">Genre ID:</label>
         <input type="text" id="genre" name="genre" placeholder="e.g., 28 for Action" required>
+        <span class="genre-info">
+                <span class="info-icon">ℹ️</span>
+                <div class="genre-tooltip">
+                    <div class="genre-grid">
+                        <div class="genre-item"><span>Action</span><span>28</span></div>
+                        <div class="genre-item"><span>Adventure</span><span>12</span></div>
+                        <div class="genre-item"><span>Animation</span><span>16</span></div>
+                        <div class="genre-item"><span>Comedy</span><span>35</span></div>
+                        <div class="genre-item"><span>Crime</span><span>80</span></div>
+                        <div class="genre-item"><span>Documentary</span><span>99</span></div>
+                        <div class="genre-item"><span>Drama</span><span>18</span></div>
+                        <div class="genre-item"><span>Family</span><span>10751</span></div>
+                        <div class="genre-item"><span>Fantasy</span><span>14</span></div>
+                        <div class="genre-item"><span>History</span><span>36</span></div>
+                        <div class="genre-item"><span>Horror</span><span>27</span></div>
+                        <div class="genre-item"><span>Music</span><span>10402</span></div>
+                        <div class="genre-item"><span>Mystery</span><span>9648</span></div>
+                        <div class="genre-item"><span>Romance</span><span>10749</span></div>
+                        <div class="genre-item"><span>Science Fiction</span><span>878</span></div>
+                        <div class="genre-item"><span>TV Movie</span><span>10770</span></div>
+                        <div class="genre-item"><span>Thriller</span><span>53</span></div>
+                        <div class="genre-item"><span>War</span><span>10752</span></div>
+                        <div class="genre-item"><span>Western</span><span>37</span></div>
+                    </div>
+                </div>
+            </span>
     </div>
     <div>
         <label for="rating">Minimum TMDb Rating:</label>
@@ -207,7 +305,10 @@
         <label for="votes">Minimum TMDb Votes:</label>
         <input type="number" id="votes" name="votes" step="0.1" min="0" max="100000" placeholder="How much users rated" required>
     </div>
-    <button type="submit">Search</button>
+    <div class="button-group">
+        <button type="submit">Search</button>
+        <button type="button" onclick="window.location.href='/'">Go to Home Page</button>
+    </div>
 </form>
 
 <h2>Search Results</h2>
@@ -231,7 +332,15 @@
         <td th:text="${movie.rating}"></td>
         <td th:text="${movie.imdbRating ?: 'N/A'}"></td>
         <td th:text="${movie.imdbVotes ?: 'N/A'}"></td>
-        <td th:text="${movie.imdbId ?: 'N/A'}"></td>
+        <td>
+            <a th:if="${movie.imdbId != null}"
+               th:href="@{'https://www.imdb.com/title/' + ${movie.imdbId} + '/'}"
+               th:text="${movie.imdbId}"
+               class="imdb-link"
+               target="_blank">
+            </a>
+            <span th:if="${movie.imdbId == null}">N/A</span>
+        </td>
     </tr>
     </tbody>
 </table>
