@@ -35,3 +35,6 @@ build/
 
 # Ignore init.sql
 init.sql
+
+# Ignore application.properties
+/src/main/resources/application.properties
