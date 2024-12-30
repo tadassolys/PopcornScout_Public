@@ -64,6 +64,15 @@ This application use Spring Boot, database interaction with JPA, API consumption
 4.  **Configure Database:**
     *   Navigate to `src/main/resources` and update `application.properties` with your PostgreSQL username, password and other database connection properties.
     *  Add TMDb and OMDb api keys in this file too.
+    *  Example:
+    *  spring.application.name=auth
+    *  spring.datasource.url=jdbc:postgresql://localhost:5432/user_registration
+    *  spring.datasource.username=
+    *  spring.datasource.password=
+    *  spring.jpa.hibernate.ddl-auto=update
+    *  spring.jpa.show-sql=true
+    *  tmdb.api.key=
+    *  omdb.api.key=
 5.  **Import the IMDb database**
     * Download [this file](https://datasets.imdbws.com/title.basics.tsv.gz), unzip it and name it `title.basics.tsv`.
     * Download [this file](https://datasets.imdbws.com/title.ratings.tsv.gz), unzip it and name it `title.ratings.tsv`.
