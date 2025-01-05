@@ -7,6 +7,13 @@ This project is a Spring Boot application that allows users to search for movies
 
 This application use Spring Boot, database interaction with JPA, API consumption, and Thymeleaf templating.
 
+
+https://github.com/user-attachments/assets/71a752d3-6577-49e9-b2a5-3b202fcf4c9f
+
+
+
+
+
 ## Features
 
 *   **User Authentication:** Secure registration and login functionality.
