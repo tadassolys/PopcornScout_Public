@@ -1,5 +1,5 @@
   # Movie Database Application
-Try at (HTTP only) http://popcorn.toshibadatacenter.site/
+Try at http://popcorn.toshibadatacenter.site/
 
 This project is a Spring Boot application that allows users to search for movies using two different data sources:
 
